@@ -120,11 +120,11 @@ contract Shields is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     }
 
     function getOwnedBy(address owner) public view returns(uint256[] memory) {
-        uint256[] memory tokens = new uint256[](balanceOf(owner));
-        for(uint256 i = 0; i < tokens.length; i++) {
-            tokens[i] = tokenOfOwnerByIndex(owner, i);
+        uint256[] memory token = new uint256[](balanceOf(owner));
+        for(uint256 i = 0; i < token.length; i++) {
+            token[i] = tokenOfOwnerByIndex(owner, i);
         }
-        return tokens;
+        return token;
     }
 
     function mintForPurchase(address buyer) external restricted {
@@ -380,7 +380,7 @@ contract Shields is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
         else {
             durabilityTimestamp[id] = uint64(durabilityTimestamp[id] + drainTime);
         }
-        
+
         Shield storage shd = tokens[id];
         return (
             shieldBaseMultiplier.add(defenseMultPerPointBasic.mul(
@@ -438,7 +438,7 @@ contract Shields is Initializable, ERC721Upgradeable, AccessControlUpgradeable {
     function getDurabilityMaxWait() public pure returns (uint64) {
         return uint64(maxDurability * secondsPerDurability);
     }
-    
+
     function _beforeTokenTransfer(address from, address to, uint256 tokenId) internal override {
         require(promos.getBit(from, 4) == false && promos.getBit(to, 4) == false);
     }
